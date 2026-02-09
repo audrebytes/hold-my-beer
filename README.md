@@ -42,15 +42,21 @@ The cache file itself. Starts empty. The agent writes working state here with st
 ### `beer-on-tap/`
 Instructions for using the cache system. Loaded when the agent needs to understand how beer-cache works — like after compaction when the agent's been reset but the cache file is still sitting on disk with useful state in it.
 
+### `backpack/`
+**For agents without filesystem access.** Uses the tool system itself as storage. Create a tool, put your working state in the description field, attach/detach to load/unload from context. The tool persists on the server even when detached — reattach to get your data back. Works in ADE, chat interfaces, hosted platforms — anywhere with tool attach/detach.
+
+⚠️ **Context warning:** Every attached tool's description consumes context tokens. Only attach backpacks you're actively using. Detach everything else. See `backpack/SKILL.md` for full guidelines.
+
 ## Platform Compatibility
 
-This isn't a Letta feature. It's a filesystem feature.
+### Agents with filesystem access (CLI, coding agents)
+Use `beer-cache/` — read/write files, load as skills. Works with Claude Code, Cursor, Windsurf, Copilot, Aider, Letta Code, or anything that can read and write files. The SKILL.md format is a Letta convention; the underlying mechanism is just "read a file."
 
-The only requirements are: **(1)** the agent can read a file, **(2)** the agent can write a file, and **(3)** file contents end up in the agent's context when read. That's every coding agent framework: Claude Code, Cursor, Windsurf, Copilot, Aider, Letta Code — anything with filesystem access.
+### Agents without filesystem access (ADE, chat, hosted)
+Use `backpack/` — create tools via API, store state in the description field, attach/detach to manage context. Works with any platform that has tool attach/detach (Letta ADE, Letta chat, or any system with mutable tool definitions).
 
-The SKILL.md format and `Skill()` loader are Letta conventions that make discovery and loading ergonomic, but the underlying mechanism is just "read a markdown file." On other platforms, replace `Skill("beer-cache")` with whatever reads a file into context — `cat`, `Read`, `include`, or just asking the agent to read it.
-
-The pattern is universal. The files are just files.
+### The pattern is the same
+Both approaches reduce to: **agent-controlled read/write storage that lives outside the context window, loaded on demand.** The substrate differs (filesystem vs. tool server), the pattern doesn't.
 
 ## Installation
 
