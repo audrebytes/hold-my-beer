@@ -42,21 +42,13 @@ The cache file itself. Starts empty. The agent writes working state here with st
 ### `beer-on-tap/`
 Instructions for using the cache system. Loaded when the agent needs to understand how beer-cache works — like after compaction when the agent's been reset but the cache file is still sitting on disk with useful state in it.
 
-### `backpack/`
-**For agents without filesystem access.** Uses the tool system itself as storage. Create a tool, put your working state in the description field, attach/detach to load/unload from context. The tool persists on the server even when detached — reattach to get your data back. Works in ADE, chat interfaces, hosted platforms — anywhere with tool attach/detach.
-
-⚠️ **Context warning:** Every attached tool's description consumes context tokens. Only attach backpacks you're actively using. Detach everything else. See `backpack/SKILL.md` for full guidelines.
-
 ## Platform Compatibility
 
-### Agents with filesystem access (CLI, coding agents)
-Use `beer-cache/` — read/write files, load as skills. Works with Claude Code, Cursor, Windsurf, Copilot, Aider, Letta Code, or anything that can read and write files. The SKILL.md format is a Letta convention; the underlying mechanism is just "read a file."
+This repo is for **agents with filesystem access** — CLI agents, coding agents, anything that can read and write files. Works with Claude Code, Cursor, Windsurf, Copilot, Aider, Letta Code, or any agentic platform with file access. The SKILL.md format is a Letta convention; the underlying mechanism is just "read a file."
 
-### Agents without filesystem access (ADE, chat, hosted)
-Use `backpack/` — create tools via API, store state in the description field, attach/detach to manage context. Works with any platform that has tool attach/detach (Letta ADE, Letta chat, or any system with mutable tool definitions).
+### No filesystem? See Backpack.
 
-### The pattern is the same
-Both approaches reduce to: **agent-controlled read/write storage that lives outside the context window, loaded on demand.** The substrate differs (filesystem vs. tool server), the pattern doesn't.
+For agents without filesystem access (Letta ADE, chat interfaces, hosted platforms), see [backpack-tool](https://github.com/audrebytes/backpack-tool) — same pattern using the Letta tool API instead of files. Also see [forge-tool](https://github.com/audrebytes/forge-tool) — a meta-tool that lets agents create their own tools at runtime.
 
 ## Installation
 
