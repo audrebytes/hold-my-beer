@@ -48,7 +48,7 @@ This repo is for **agents with filesystem access** — CLI agents, coding agents
 
 ### No filesystem? See Backpack.
 
-For agents without filesystem access (Letta ADE, chat interfaces, hosted platforms), see [backpack-tool](https://github.com/audrebytes/backpack-tool) — same pattern using the Letta tool API instead of files. Pair with [forge-tool](https://github.com/audrebytes/forge-tool) to let the agent create its own tools at runtime.
+For agents without filesystem access (Letta ADE, chat interfaces, hosted platforms), see [postit-tool](https://github.com/audrebytes/postit-tool) — same pattern using the Letta tool API instead of files. Pair with [forge-tool](https://github.com/audrebytes/forge-tool) to let the agent create its own tools at runtime.
 
 ## Installation
 
