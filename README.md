@@ -14,7 +14,7 @@ In that default configuration, there's no good place for ephemeral working state
 
 ## The Solution
 
-The Letta skill loading mechanism reads a file from disk and injects it into context on demand. That's a read operation. Agents can also write files. Put those together and you have a **read/write cache backed by the filesystem** — using capabilities that are already part of the system. No new tools, no external services. Free to store, costs tokens only when loaded, and survives everything.
+Any agent system that can read and write files already has everything it needs. Reading a file injects its contents into context. Writing a file persists state to disk. Put those together and you have a **read/write cache backed by the filesystem** — using capabilities that are already part of any agentic platform with file access. No new tools, no external services. Free to store, costs tokens only when loaded, and survives everything.
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
