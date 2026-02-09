@@ -6,11 +6,13 @@ Three skills that give your agent a new memory tier — cheaper than context tok
 
 ## The Problem
 
-Letta agents have two places to keep state: the context window (expensive, dies at compaction) and archival memory (requires API calls and semantic search to retrieve). There's no good middle ground for ephemeral working state — the variable values, file paths, and intermediate results you need *right now* but not forever.
+Out of the box, Letta agents have two places to keep state: the context window (expensive, dies at compaction) and archival memory (requires API calls and semantic search to retrieve). Yes, you can extend this with custom tools, MCP servers, external databases, and whatever else you want to bolt on — but we're talking about what ships with every Letta agent by default.
+
+In that default configuration, there's no good middle ground for ephemeral working state — the variable values, file paths, and intermediate results you need *right now* but not forever. But the mechanism for one already exists: **the same system that loads and unloads skills can serve as a read/write cache.**
 
 ## The Solution
 
-The Letta skill loading mechanism reads a file from disk and injects it into context on demand. That's a read operation. Agents can also write files. Put those together and you have a **read/write cache backed by the filesystem** — free to store, costs tokens only when loaded, and survives everything.
+The Letta skill loading mechanism reads a file from disk and injects it into context on demand. That's a read operation. Agents can also write files. Put those together and you have a **read/write cache backed by the filesystem** — using capabilities that are already part of the system. No new tools, no external services. Free to store, costs tokens only when loaded, and survives everything.
 
 ```
 ┌─────────────────────────────────────────────────────┐
