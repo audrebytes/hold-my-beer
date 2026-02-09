@@ -6,11 +6,11 @@ Three files that give any agent with filesystem access a new memory tier — che
 
 ## The Problem
 
-Out of the box, Letta agents have three places to keep state: the context window (raw conversation, expensive, dies at compaction), memory blocks (Letta's claim to fame — persistent, always in context, but size-limited), and archival memory (unlimited storage, but requires API calls and semantic search to retrieve). Files are also available but read-only from the agent's perspective in standard configurations.
+Most agentic platforms give agents some combination of: a context window (expensive, limited, lost on session reset), persistent memory (always loaded, size-constrained), and long-term storage (searchable but costly to retrieve). Some also provide file access — but typically treat it as read-only input, not working storage.
 
-Yes, you can extend all of this with custom tools, MCP servers, external databases, and whatever else you want to bolt on — but we're talking about what ships with every Letta agent by default.
+What's usually missing is a place for **ephemeral working state** — the variable values, intermediate results, and scratch notes you need *during* a task but don't want permanently in your memory. Persistent memory is for identity and long-term knowledge, not for holding a list of file paths you're processing right now.
 
-In that default configuration, there's no good place for ephemeral working state — the variable values, intermediate results, and scratch notes you need during a task but don't want permanently in your memory blocks. Memory blocks are for identity and long-term knowledge, not for holding a list of file paths you're processing right now. But the mechanism for a working cache already exists: **the same system that loads and unloads skills can serve as a read/write scratchpad.**
+But if your agent can read *and write* files, the mechanism for a working cache already exists. **Any system that supports skill/instruction files can use those same files as a read/write scratchpad.**
 
 ## The Solution
 
