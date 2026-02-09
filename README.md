@@ -21,14 +21,15 @@ Any agent system that can read and write files already has everything it needs. 
 │  Memory Tier        Cost              Persistence    Read-Write  │
 ├──────────────────────────────────────────────────────────────────┤
 │  Context window     Always on         Dies at comp.  Read-only   │
-│  Memory blocks      Always on         Survives comp. Read-write  │
+│  Memory blocks                                                   │
+│  (Letta)            Always on         Survives comp. Read-write  │
 │  ★ Beer cache       Free until loaded Survives all   Read-write  │
 │  Archival memory    Search required   Permanent      Write-easy  │
 │                                                      Read-costly │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-Beer cache fills the gap between memory blocks (always consuming context tokens, size-limited, meant for permanent knowledge) and archival memory (requires a search to retrieve anything). It's the working desk. Memory blocks are the whiteboard on the wall. Archival is the filing cabinet.
+Beer cache fills the gap. It's the working desk. Archival storage is the filing cabinet.
 
 ## What's In The Box
 
