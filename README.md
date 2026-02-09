@@ -87,6 +87,20 @@ That's it. No configuration. No API keys. No hooks to wire up.
 
 The beer cache and hold-my-beer work together. During normal work, state lives in the cache file. When compaction threatens, hold-my-beer saves a structured snapshot to archival as permanent backup. The cache file survives compaction too — so the agent has *two* recovery paths.
 
+## Prior Art: TodoWrite
+
+If this pattern looks familiar, it should. Letta Code's built-in `TodoWrite` tool does the same thing — it writes structured state to a temporary file on disk and injects it into the agent's context. The todo list you see in Letta Code sessions is a file with a random name that gets created, updated, and read back using exactly this mechanism: filesystem-backed state, injected on demand.
+
+We didn't invent this pattern. We arrived at it independently from the compaction defense angle and then recognized it as the same architecture Letta's team already uses for task tracking. What we're adding is:
+
+- **General-purpose** — not locked to a todo schema. Any structure, any content.
+- **Agent-controlled format** — the agent decides what the cache looks like based on the task.
+- **Explicit and transparent** — the agent knows where the file is and manages it with standard tools, not a specialized API.
+- **Multiple caches possible** — you could have `beer-cache-db/`, `beer-cache-deploy/`, etc.
+- **Compaction defense integration** — designed to work with hold-my-beer for pre-compaction saves.
+
+The validation: if Letta's own team built TodoWrite on this architecture, the pattern is sound.
+
 ## Why This Works
 
 The key insight: **the skill loading mechanism is just a file reader that injects content into context.** Any file in the skills directory can be loaded on demand. If the agent can also *write* to that file, the skill system becomes a read/write cache with:
