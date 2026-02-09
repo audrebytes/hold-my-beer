@@ -1,8 +1,8 @@
 # Hold My Beer 🍺
 
-**Filesystem-backed working memory for Letta agents.**
+**Filesystem-backed working memory for AI agents.**
 
-Three skills that give your agent a new memory tier — cheaper than context tokens, more natural than archival search, and survives compaction.
+Three files that give any agent with filesystem access a new memory tier — cheaper than context tokens, more natural than semantic search, and survives session resets. Works with any framework: Letta, Claude Code, Cursor, Windsurf, Copilot, Aider, or anything that can read and write files.
 
 ## The Problem
 
@@ -41,7 +41,19 @@ The cache file itself. Starts empty. The agent writes working state here with st
 ### `beer-on-tap/`
 Instructions for using the cache system. Loaded when the agent needs to understand how beer-cache works — like after compaction when the agent's been reset but the cache file is still sitting on disk with useful state in it.
 
+## Platform Compatibility
+
+This isn't a Letta feature. It's a filesystem feature.
+
+The only requirements are: **(1)** the agent can read a file, **(2)** the agent can write a file, and **(3)** file contents end up in the agent's context when read. That's every coding agent framework: Claude Code, Cursor, Windsurf, Copilot, Aider, Letta Code — anything with filesystem access.
+
+The SKILL.md format and `Skill()` loader are Letta conventions that make discovery and loading ergonomic, but the underlying mechanism is just "read a markdown file." On other platforms, replace `Skill("beer-cache")` with whatever reads a file into context — `cat`, `Read`, `include`, or just asking the agent to read it.
+
+The pattern is universal. The files are just files.
+
 ## Installation
+
+### Letta Code / Letta Agents
 
 Copy the three folders to your Letta skills directory:
 
@@ -56,7 +68,11 @@ cp -r beer-cache/ ~/.letta/skills/
 cp -r beer-on-tap/ ~/.letta/skills/
 ```
 
-That's it. No configuration. No API keys. No hooks to wire up.
+### Any Other Agent Framework
+
+Put the files wherever your agent can read and write. Point your agent at `beer-on-tap/SKILL.md` for instructions. That's it.
+
+No configuration. No API keys. No hooks to wire up. No platform lock-in.
 
 ## How It Works
 
